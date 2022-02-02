@@ -15,6 +15,7 @@
  * Public License for more details
  */
 
+
 #include <vector>
 #include <iostream>
 #include <deque>
@@ -247,7 +248,6 @@ public:
         yInfo() << "getBytesPerSamples " << sound.getBytesPerSample();
         
         auto vec_i = sound.getNonInterleavedAudioRawData();
-        //auto vec_i = sound.getInterleavedAudioRawData();
         auto s1 = std::vector<short>(vec_i.begin(), vec_i.end());
         
         yInfo() << "AudioRawData s1.size()" << s1.size();
@@ -340,7 +340,7 @@ public:
     {           
         std::lock_guard<std::mutex> lg(mtx); 
         yarp::os::Bottle cmd, rep;
-        //cmd.addVocab(yarp::os::Vocab::encode("start"));
+        //cmd.addVocab32("start");
         cmd.addString("start");
         if (audioCommand.write(cmd, rep))
         {
@@ -413,7 +413,7 @@ public:
 
         std::string moduleName = rf.check("name", yarp::os::Value("googleSpeech"), "module name (string)").asString();
         std::string language = rf.check("language_code", yarp::os::Value("en-US"), "language (string)").asString();
-        int sample_rate = rf.check("sample_rate_hertz", yarp::os::Value(16000), "sample rate (int)").asInt();
+        int sample_rate = rf.check("sample_rate_hertz", yarp::os::Value(16000), "sample rate (int)").asInt32();
         
         if (rf.check("uniqueSound", "use a yarp::sig::Sound instead of a microphone"))
             uniqueSound = true;
